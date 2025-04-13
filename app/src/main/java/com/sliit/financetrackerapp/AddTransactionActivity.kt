@@ -11,14 +11,14 @@ class AddTransactionActivity : AppCompatActivity() {
 
     private lateinit var etTitle: EditText
     private lateinit var etAmount: EditText
-    private lateinit var etCategory: EditText
     private lateinit var etDate: EditText
+    private lateinit var spinnerCategory: Spinner
     private lateinit var rgType: RadioGroup
     private lateinit var rbIncome: RadioButton
     private lateinit var rbExpense: RadioButton
     private lateinit var btnSave: Button
 
-    private var editIndex: Int = -1 // to track if we're editing
+    private var editIndex: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,12 +26,18 @@ class AddTransactionActivity : AppCompatActivity() {
 
         etTitle = findViewById(R.id.et_title)
         etAmount = findViewById(R.id.et_amount)
-        etCategory = findViewById(R.id.et_category)
         etDate = findViewById(R.id.et_date)
+        spinnerCategory = findViewById(R.id.spinner_category)
         rgType = findViewById(R.id.rg_type)
         rbIncome = findViewById(R.id.rb_income)
         rbExpense = findViewById(R.id.rb_expense)
         btnSave = findViewById(R.id.btn_save)
+
+        // Set up spinner with predefined categories
+        val categories = listOf("Food", "Transport", "Bills", "Entertainment", "Health", "Educational")
+        val categoryAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerCategory.adapter = categoryAdapter
 
         val sharedPreferences = getSharedPreferences("FinanceData", Context.MODE_PRIVATE)
         val gson = Gson()
@@ -41,15 +47,20 @@ class AddTransactionActivity : AppCompatActivity() {
             gson.fromJson(existingJson, typeToken)
         else mutableListOf()
 
-        // 🟡 Check if we're editing an existing transaction
+        // If editing
         editIndex = intent.getIntExtra("editIndex", -1)
         val editJson = intent.getStringExtra("editTransaction")
         if (editIndex != -1 && editJson != null) {
             val transaction = gson.fromJson(editJson, Transaction::class.java)
             etTitle.setText(transaction.title)
             etAmount.setText(transaction.amount.toString())
-            etCategory.setText(transaction.category)
             etDate.setText(transaction.date)
+
+            val spinnerPosition = categories.indexOf(transaction.category)
+            if (spinnerPosition != -1) {
+                spinnerCategory.setSelection(spinnerPosition)
+            }
+
             if (transaction.type == "Income") rbIncome.isChecked = true else rbExpense.isChecked = true
             btnSave.text = "Update Transaction"
         }
@@ -57,11 +68,11 @@ class AddTransactionActivity : AppCompatActivity() {
         btnSave.setOnClickListener {
             val title = etTitle.text.toString()
             val amount = etAmount.text.toString().toDoubleOrNull()
-            val category = etCategory.text.toString()
+            val category = spinnerCategory.selectedItem.toString()
             val date = etDate.text.toString()
             val type = if (rbIncome.isChecked) "Income" else "Expense"
 
-            if (title.isEmpty() || amount == null || category.isEmpty() || date.isEmpty()) {
+            if (title.isEmpty() || amount == null || date.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }

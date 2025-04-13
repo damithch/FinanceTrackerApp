@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">FinanceTrackerApp</string>
+    <string name="app_name">Finance Tracker</string>
+
+    <!-- Hints -->
+    <string name="hint_title">Title</string>
+    <string name="hint_amount">Amount</string>
+    <string name="hint_date">Date (e.g. 2025-04-12)</string>
+
+    <!-- Types -->
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+
+    <!-- Buttons -->
+    <string name="save_transaction">Save Transaction</string>
+    <string name="export_json">Export to JSON</string>
+    <string name="export_txt">Export to TXT</string>
+    <string name="view_chart">View Spending Chart</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="view_history">View Transaction History</string>
+
+    <!-- Titles -->
+    <string name="transaction_history">Transaction History</string>
 </resources>
