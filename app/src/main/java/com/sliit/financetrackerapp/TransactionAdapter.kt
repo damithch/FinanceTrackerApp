@@ -1,5 +1,6 @@
 package com.sliit.financetrackerapp
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 class TransactionAdapter(
     private val transactionList: MutableList<Transaction>,
     private val onDelete: (Int) -> Unit,
-    private val onEdit: (Int) -> Unit
+    private val onEdit: (Int, String) -> Unit // 🔁 Added type parameter
 ) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
 
     inner class TransactionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,8 +32,16 @@ class TransactionAdapter(
         holder.tvTitle.text = transaction.title
         holder.tvDetails.text = "${transaction.category} | Rs.${transaction.amount} | ${transaction.date}"
 
+        // 🟢 Set color for Income / 🔴 for Expense
+        if (transaction.type == "Income") {
+            holder.tvTitle.setTextColor(Color.parseColor("#4CAF50")) // green
+        } else {
+            holder.tvTitle.setTextColor(Color.parseColor("#F44336")) // red
+        }
+
+        // 🛠 Edit click with type info
         holder.btnEdit.setOnClickListener {
-            onEdit(position)
+            onEdit(position, transaction.type)
         }
 
         holder.btnDelete.setOnClickListener {

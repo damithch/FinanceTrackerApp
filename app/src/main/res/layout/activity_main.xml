@@ -39,7 +39,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="8dp" />
 
-    <!-- 🟡 Budget Warning Text -->
+    <!-- Budget Warning -->
     <TextView
         android:id="@+id/tv_budget_warning"
         android:layout_width="0dp"
@@ -53,29 +53,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="12dp" />
 
-    <!-- Button 1: Add Transaction -->
+    <!-- 🆕 Button 1: Add Income -->
     <Button
-        android:id="@+id/btn_add_transaction"
+        android:id="@+id/btn_add_income"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Add Transaction"
+        android:text="Add Income"
+        android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@id/tv_budget_warning"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Button 2: View Spending Chart -->
+    <!-- 🆕 Button 2: Add Expense -->
+    <Button
+        android:id="@+id/btn_add_expense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Add Expense"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_income"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Button 3: View Spending Chart -->
     <Button
         android:id="@+id/btn_view_chart"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="View Spending Chart"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/btn_add_transaction"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_expense"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Button 3: View Transaction History -->
+    <!-- Button 4: View Transaction History -->
     <Button
         android:id="@+id/btn_transaction_history"
         android:layout_width="0dp"
@@ -86,7 +97,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Button 4: Set Monthly Budget -->
+    <!-- Button 5: Set Monthly Budget -->
     <Button
         android:id="@+id/btn_set_budget"
         android:layout_width="0dp"

@@ -19,7 +19,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvExpense: TextView
     private lateinit var tvBudgetWarning: TextView
 
-    private lateinit var btnAddTransaction: Button
+    private lateinit var btnAddIncome: Button
+    private lateinit var btnAddExpense: Button
     private lateinit var btnViewChart: Button
     private lateinit var btnTransactionHistory: Button
     private lateinit var btnSetBudget: Button
@@ -29,40 +30,48 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // Edge-to-edge padding
+        // Handle edge-to-edge
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // Bind UI elements
+        // Bind views
         tvBalance = findViewById(R.id.tv_balance)
         tvIncome = findViewById(R.id.tv_income)
         tvExpense = findViewById(R.id.tv_expense)
         tvBudgetWarning = findViewById(R.id.tv_budget_warning)
 
-        btnAddTransaction = findViewById(R.id.btn_add_transaction)
+        btnAddIncome = findViewById(R.id.btn_add_income)
+        btnAddExpense = findViewById(R.id.btn_add_expense)
         btnViewChart = findViewById(R.id.btn_view_chart)
         btnTransactionHistory = findViewById(R.id.btn_transaction_history)
         btnSetBudget = findViewById(R.id.btn_set_budget)
 
-        // Navigate to Add Transaction
-        btnAddTransaction.setOnClickListener {
-            startActivity(Intent(this, AddTransactionActivity::class.java))
+        // Navigate to Add Income (only amount)
+        btnAddIncome.setOnClickListener {
+            startActivity(Intent(this, AddIncomeActivity::class.java))
         }
 
-        // Navigate to Spending Chart
+        // Navigate to Add Expense (full form)
+        btnAddExpense.setOnClickListener {
+            val intent = Intent(this, AddTransactionActivity::class.java)
+            intent.putExtra("transactionType", "Expense")
+            startActivity(intent)
+        }
+
+        // Chart page
         btnViewChart.setOnClickListener {
             startActivity(Intent(this, ChartActivity::class.java))
         }
 
-        // Navigate to Transaction History
+        // Transaction history
         btnTransactionHistory.setOnClickListener {
             startActivity(Intent(this, TransactionHistoryActivity::class.java))
         }
 
-        // Navigate to Budget Setup
+        // Set monthly budget
         btnSetBudget.setOnClickListener {
             startActivity(Intent(this, BudgetActivity::class.java))
         }
@@ -102,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         tvExpense.text = "Expense: Rs. %.2f".format(expense)
         tvBalance.text = "Balance: Rs. %.2f".format(balance)
 
-        // Show budget warning if exceeded
+        // Show budget warning
         if (budget > 0f && expense > budget) {
             tvBudgetWarning.text = "⚠️ You have exceeded your budget of Rs. %.2f!".format(budget)
             tvBudgetWarning.setTextColor(resources.getColor(android.R.color.holo_red_dark))

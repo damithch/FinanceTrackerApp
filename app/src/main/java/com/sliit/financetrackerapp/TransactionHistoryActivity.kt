@@ -17,6 +17,7 @@ class TransactionHistoryActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: TransactionAdapter
     private lateinit var transactions: MutableList<Transaction>
+    private lateinit var allTransactions: MutableList<Transaction>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,34 +30,56 @@ class TransactionHistoryActivity : AppCompatActivity() {
         val gson = Gson()
         val json = sharedPreferences.getString("transactions", null)
         val type = object : TypeToken<MutableList<Transaction>>() {}.type
-        transactions = if (json != null) gson.fromJson(json, type) else mutableListOf()
+        allTransactions = if (json != null) gson.fromJson(json, type) else mutableListOf()
+        transactions = allTransactions.toMutableList()
 
         adapter = TransactionAdapter(transactions,
             onDelete = { index ->
+                val txnToRemove = transactions[index]
+                allTransactions.remove(txnToRemove)
+
+                sharedPreferences.edit()
+                    .putString("transactions", gson.toJson(allTransactions)).apply()
+
                 transactions.removeAt(index)
-                sharedPreferences.edit().putString("transactions", gson.toJson(transactions)).apply()
                 adapter.notifyItemRemoved(index)
             },
-            onEdit = { index ->
-                val intent = Intent(this, AddTransactionActivity::class.java)
+            onEdit = { index, txnType ->
+                val txn = transactions[index]
+                val intent = if (txnType == "Income") {
+                    Intent(this, AddIncomeActivity::class.java)
+                } else {
+                    Intent(this, AddTransactionActivity::class.java)
+                }
                 intent.putExtra("editIndex", index)
-                intent.putExtra("editTransaction", gson.toJson(transactions[index]))
+                intent.putExtra("editTransaction", gson.toJson(txn))
                 startActivity(intent)
             }
         )
 
         recyclerView.adapter = adapter
 
-        // ✅ Export JSON
-        val btnExportJson = findViewById<Button>(R.id.btn_export_json)
-        btnExportJson.setOnClickListener {
-            exportToJson()
+        // Export
+        findViewById<Button>(R.id.btn_export_json).setOnClickListener { exportToJson() }
+        findViewById<Button>(R.id.btn_export_txt).setOnClickListener { exportToTxt() }
+
+        // Filter
+        findViewById<Button>(R.id.btn_filter_income).setOnClickListener {
+            transactions.clear()
+            transactions.addAll(allTransactions.filter { it.type == "Income" })
+            adapter.notifyDataSetChanged()
         }
 
-        // ✅ Export TXT
-        val btnExportTxt = findViewById<Button>(R.id.btn_export_txt)
-        btnExportTxt.setOnClickListener {
-            exportToTxt()
+        findViewById<Button>(R.id.btn_filter_expense).setOnClickListener {
+            transactions.clear()
+            transactions.addAll(allTransactions.filter { it.type == "Expense" })
+            adapter.notifyDataSetChanged()
+        }
+
+        findViewById<Button>(R.id.btn_filter_all).setOnClickListener {
+            transactions.clear()
+            transactions.addAll(allTransactions)
+            adapter.notifyDataSetChanged()
         }
     }
 
@@ -67,36 +90,32 @@ class TransactionHistoryActivity : AppCompatActivity() {
         val gson = Gson()
         val json = sharedPreferences.getString("transactions", null)
         val type = object : TypeToken<MutableList<Transaction>>() {}.type
-        val updatedList: MutableList<Transaction> = if (json != null) gson.fromJson(json, type) else mutableListOf()
+        allTransactions = if (json != null) gson.fromJson(json, type) else mutableListOf()
 
         transactions.clear()
-        transactions.addAll(updatedList)
+        transactions.addAll(allTransactions)
         adapter.notifyDataSetChanged()
     }
 
     private fun exportToJson() {
         val gson = Gson()
-        val jsonString = gson.toJson(transactions)
+        val jsonString = gson.toJson(allTransactions)
 
         try {
-            val fileName = "transactions_backup.json"
-            val file = File(filesDir, fileName)
+            val file = File(filesDir, "transactions_backup.json")
             file.writeText(jsonString)
-
             Toast.makeText(this, "Exported to ${file.absolutePath}", Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
             Toast.makeText(this, "Export failed: ${e.message}", Toast.LENGTH_SHORT).show()
-            e.printStackTrace()
         }
     }
 
     private fun exportToTxt() {
         try {
-            val fileName = "transactions_backup.txt"
-            val file = File(filesDir, fileName)
-
+            val file = File(filesDir, "transactions_backup.txt")
             val content = StringBuilder()
-            for (txn in transactions) {
+
+            for (txn in allTransactions) {
                 content.append("Title: ${txn.title}\n")
                 content.append("Amount: Rs. ${txn.amount}\n")
                 content.append("Category: ${txn.category}\n")
@@ -109,7 +128,6 @@ class TransactionHistoryActivity : AppCompatActivity() {
             Toast.makeText(this, "TXT Exported to ${file.absolutePath}", Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
             Toast.makeText(this, "Export failed: ${e.message}", Toast.LENGTH_SHORT).show()
-            e.printStackTrace()
         }
     }
 }
