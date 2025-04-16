@@ -5,17 +5,35 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FAFAFA"
     android:padding="24dp">
+
+    <!-- Header Title -->
+    <TextView
+        android:id="@+id/tv_main_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Finance Dashboard"
+        android:textSize="26sp"
+        android:textColor="#37474F"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/tv_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Balance: Rs. 0.00"
-        android:textSize="22sp"
+        android:textSize="24sp"
+        android:textColor="#1E88E5"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tv_main_header"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/tv_income"
@@ -34,12 +52,11 @@
         android:layout_height="wrap_content"
         android:text="Expense: Rs. 0.00"
         android:textSize="18sp"
-        android:textColor="#F44336"
+        android:textColor="#E53935"
         app:layout_constraintTop_toBottomOf="@id/tv_income"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="8dp" />
 
-    <!-- Budget Warning -->
     <TextView
         android:id="@+id/tv_budget_warning"
         android:layout_width="0dp"
@@ -48,61 +65,70 @@
         android:textSize="16sp"
         android:textColor="#D32F2F"
         android:visibility="gone"
+        android:background="#FFEBEE"
+        android:padding="8dp"
+        android:elevation="4dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@id/tv_expense"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 🆕 Button 1: Add Income -->
     <Button
         android:id="@+id/btn_add_income"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Add Income"
+        android:backgroundTint="#81C784"
+        android:textColor="@android:color/white"
         android:layout_marginTop="24dp"
+        android:elevation="2dp"
         app:layout_constraintTop_toBottomOf="@id/tv_budget_warning"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 🆕 Button 2: Add Expense -->
     <Button
         android:id="@+id/btn_add_expense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Add Expense"
+        android:backgroundTint="#E57373"
+        android:textColor="@android:color/white"
         android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@id/btn_add_income"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Button 3: View Spending Chart -->
     <Button
         android:id="@+id/btn_view_chart"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="View Spending Chart"
+        android:backgroundTint="#4DD0E1"
+        android:textColor="@android:color/white"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/btn_add_expense"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Button 4: View Transaction History -->
     <Button
         android:id="@+id/btn_transaction_history"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="View Transaction History"
+        android:backgroundTint="#9575CD"
+        android:textColor="@android:color/white"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/btn_view_chart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Button 5: Set Monthly Budget -->
     <Button
         android:id="@+id/btn_set_budget"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Set Monthly Budget"
+        android:backgroundTint="#FFB74D"
+        android:textColor="@android:color/white"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/btn_transaction_history"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,5 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="primary">#027368</color>           <!-- Deep teal -->
+    <color name="primary_dark">#026b5a</color>      <!-- Slightly darker teal -->
+    <color name="accent">#f4a742</color>            <!-- Warm orange accent -->
+    <color name="error">#D32F2F</color>             <!-- Standard red for errors -->
+    <color name="background">#FAFAFA</color>        <!-- Light neutral background -->
+    <color name="card_bg">#FFFFFF</color>           <!-- White cards -->
+    <color name="text_primary">#212121</color>      <!-- Dark text -->
+    <color name="text_secondary">#757575</color>    <!-- Subtext -->
+    <color name="button_text">#FFFFFF</color>       <!-- Button text white -->
 </resources>

@@ -12,12 +12,18 @@
 
     <!-- Buttons -->
     <string name="save_transaction">Save Transaction</string>
+    <string name="add_income">Add Income</string>
+    <string name="add_expense">Add Expense</string>
+    <string name="view_chart">View Spending Chart</string>
+    <string name="view_history">View Transaction History</string>
+    <string name="set_budget">Set Monthly Budget</string>
     <string name="export_json">Export to JSON</string>
     <string name="export_txt">Export to TXT</string>
-    <string name="view_chart">View Spending Chart</string>
-    <string name="add_transaction">Add Transaction</string>
-    <string name="view_history">View Transaction History</string>
+    <string name="filter_income">Show Incomes</string>
+    <string name="filter_expense">Show Expenses</string>
+    <string name="filter_all">Show All</string>
 
     <!-- Titles -->
     <string name="transaction_history">Transaction History</string>
+    <string name="budget_warning">⚠️ You have exceeded your budget!</string>
 </resources>
