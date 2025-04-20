@@ -8,20 +8,28 @@ import androidx.appcompat.app.AppCompatActivity
 
 class SplashActivity : AppCompatActivity() {
 
+    companion object {
+        /** How long the splash is visible (milliseconds) */
+        private const val SPLASH_DELAY: Long = 1500
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            val prefs = getSharedPreferences("AuthPrefs", MODE_PRIVATE)
-            val loggedIn = prefs.getBoolean("loggedIn", false)
+        // Full‑screen look
+        supportActionBar?.hide()
 
-            if (loggedIn) {
-                startActivity(Intent(this, MainActivity::class.java))
-            } else {
-                startActivity(Intent(this, LoginActivity::class.java))
-            }
-            finish()
-        }, 1500)      // 1.5 s splash
+        Handler(Looper.getMainLooper()).postDelayed({
+            val next = if (isLoggedIn()) MainActivity::class.java
+            else LoginActivity::class.java
+            startActivity(Intent(this, next))
+            finish()                 // don’t return to splash when back is pressed
+        }, SPLASH_DELAY)
     }
+
+    /** Reads the shared‑prefs flag set after a successful login */
+    private fun isLoggedIn(): Boolean =
+        getSharedPreferences("AuthPrefs", MODE_PRIVATE)
+            .getBoolean("loggedIn", false)
 }
