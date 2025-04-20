@@ -14,67 +14,66 @@ import com.google.gson.reflect.TypeToken
 
 class MainActivity : AppCompatActivity() {
 
+    // ── Summary TextViews ─────────────────────────────────────
     private lateinit var tvBalance: TextView
-    private lateinit var tvIncome: TextView
+    private lateinit var tvIncome:  TextView
     private lateinit var tvExpense: TextView
     private lateinit var tvBudgetWarning: TextView
 
+    // ── Action Buttons ───────────────────────────────────────
     private lateinit var btnAddIncome: Button
     private lateinit var btnAddExpense: Button
     private lateinit var btnViewChart: Button
     private lateinit var btnTransactionHistory: Button
     private lateinit var btnSetBudget: Button
+    private lateinit var btnLogout: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // Handle edge-to-edge
+        /* Edge‑to‑edge padding:  use the real root id -> @+id/main */
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
             insets
         }
 
         // Bind views
-        tvBalance = findViewById(R.id.tv_balance)
-        tvIncome = findViewById(R.id.tv_income)
-        tvExpense = findViewById(R.id.tv_expense)
+        tvBalance       = findViewById(R.id.tv_balance)
+        tvIncome        = findViewById(R.id.tv_income)
+        tvExpense       = findViewById(R.id.tv_expense)
         tvBudgetWarning = findViewById(R.id.tv_budget_warning)
 
-        btnAddIncome = findViewById(R.id.btn_add_income)
-        btnAddExpense = findViewById(R.id.btn_add_expense)
-        btnViewChart = findViewById(R.id.btn_view_chart)
-        btnTransactionHistory = findViewById(R.id.btn_transaction_history)
-        btnSetBudget = findViewById(R.id.btn_set_budget)
+        btnAddIncome           = findViewById(R.id.btn_add_income)
+        btnAddExpense          = findViewById(R.id.btn_add_expense)
+        btnViewChart           = findViewById(R.id.btn_view_chart)
+        btnTransactionHistory  = findViewById(R.id.btn_transaction_history)
+        btnSetBudget           = findViewById(R.id.btn_set_budget)
+        btnLogout              = findViewById(R.id.btn_logout)
 
-        // Navigate to Add Income (only amount)
+        // Navigation
         btnAddIncome.setOnClickListener {
             startActivity(Intent(this, AddIncomeActivity::class.java))
         }
-
-        // Navigate to Add Expense (full form)
         btnAddExpense.setOnClickListener {
-            val intent = Intent(this, AddTransactionActivity::class.java)
-            intent.putExtra("transactionType", "Expense")
-            startActivity(intent)
+            startActivity(
+                Intent(this, AddTransactionActivity::class.java)
+                    .putExtra("transactionType", "Expense")
+            )
         }
-
-        // Chart page
         btnViewChart.setOnClickListener {
             startActivity(Intent(this, ChartActivity::class.java))
         }
-
-        // Transaction history
         btnTransactionHistory.setOnClickListener {
             startActivity(Intent(this, TransactionHistoryActivity::class.java))
         }
-
-        // Set monthly budget
         btnSetBudget.setOnClickListener {
             startActivity(Intent(this, BudgetActivity::class.java))
         }
+
+        btnLogout.setOnClickListener { doLogout() }
     }
 
     override fun onResume() {
@@ -82,42 +81,46 @@ class MainActivity : AppCompatActivity() {
         loadAndDisplayData()
     }
 
+    /** Reads totals from SharedPreferences and updates the dashboard. */
     private fun loadAndDisplayData() {
-        val sharedPreferences = getSharedPreferences("FinanceData", Context.MODE_PRIVATE)
-        val gson = Gson()
-        val json = sharedPreferences.getString("transactions", null)
-        val type = object : TypeToken<List<Transaction>>() {}.type
-        val transactionList: List<Transaction> = if (json != null) {
-            gson.fromJson(json, type)
-        } else {
-            emptyList()
-        }
+        val prefs = getSharedPreferences("FinanceData", Context.MODE_PRIVATE)
+        val gson  = Gson()
+        val json  = prefs.getString("transactions", null)
+        val list: List<Transaction> = if (json != null) {
+            gson.fromJson(json, object : TypeToken<List<Transaction>>() {}.type)
+        } else emptyList()
 
         var income = 0.0
         var expense = 0.0
-
-        for (txn in transactionList) {
-            if (txn.type == "Income") {
-                income += txn.amount
-            } else {
-                expense += txn.amount
-            }
-        }
+        list.forEach { if (it.type == "Income") income += it.amount else expense += it.amount }
 
         val balance = income - expense
-        val budget = sharedPreferences.getFloat("monthlyBudget", 0f)
+        val budget  = prefs.getFloat("monthlyBudget", 0f)
 
-        tvIncome.text = "Income: Rs. %.2f".format(income)
+        tvIncome.text  = "Income: Rs. %.2f".format(income)
         tvExpense.text = "Expense: Rs. %.2f".format(expense)
         tvBalance.text = "Balance: Rs. %.2f".format(balance)
 
-        // Show budget warning
         if (budget > 0f && expense > budget) {
-            tvBudgetWarning.text = "⚠️ You have exceeded your budget of Rs. %.2f!".format(budget)
-            tvBudgetWarning.setTextColor(resources.getColor(android.R.color.holo_red_dark))
-            tvBudgetWarning.visibility = TextView.VISIBLE
+            tvBudgetWarning.apply {
+                text = "⚠️ You have exceeded your budget of Rs. %.2f!".format(budget)
+                setTextColor(resources.getColor(android.R.color.holo_red_dark, null))
+                visibility = TextView.VISIBLE
+            }
         } else {
             tvBudgetWarning.visibility = TextView.GONE
         }
+    }
+
+    /** Logs the user out and returns to LoginActivity. */
+    private fun doLogout() {
+        getSharedPreferences("AuthPrefs", MODE_PRIVATE)
+            .edit().putBoolean("loggedIn", false).apply()
+
+        Intent(this, LoginActivity::class.java).also {
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(it)
+        }
+        finish()
     }
 }

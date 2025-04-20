@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Root ConstraintLayout for the Finance Dashboard screen -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,32 +9,33 @@
     android:background="#FAFAFA"
     android:padding="24dp">
 
-    <!-- Header Title -->
+    <!-- ───── Header ──────────────────────────────────────────── -->
     <TextView
         android:id="@+id/tv_main_header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Finance Dashboard"
         android:textSize="26sp"
-        android:textColor="#37474F"
         android:textStyle="bold"
+        android:textColor="#37474F"
         android:gravity="center"
         android:padding="12dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- ───── Balance / Income / Expense ──────────────────────── -->
     <TextView
         android:id="@+id/tv_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Balance: Rs. 0.00"
         android:textSize="24sp"
-        android:textColor="#1E88E5"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_header"
+        android:textColor="#1E88E5"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintTop_toBottomOf="@id/tv_main_header" />
 
     <TextView
         android:id="@+id/tv_income"
@@ -42,9 +44,9 @@
         android:text="Income: Rs. 0.00"
         android:textSize="18sp"
         android:textColor="#4CAF50"
-        app:layout_constraintTop_toBottomOf="@id/tv_balance"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintTop_toBottomOf="@id/tv_balance" />
 
     <TextView
         android:id="@+id/tv_expense"
@@ -53,85 +55,97 @@
         android:text="Expense: Rs. 0.00"
         android:textSize="18sp"
         android:textColor="#E53935"
-        app:layout_constraintTop_toBottomOf="@id/tv_income"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintTop_toBottomOf="@id/tv_income" />
 
+    <!-- ───── Budget warning banner (hidden by default) ───────── -->
     <TextView
         android:id="@+id/tv_budget_warning"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text=""
+        android:visibility="gone"
         android:textSize="16sp"
         android:textColor="#D32F2F"
-        android:visibility="gone"
         android:background="#FFEBEE"
         android:padding="8dp"
         android:elevation="4dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_expense"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_expense" />
 
+    <!-- ───── Action buttons ──────────────────────────────────── -->
     <Button
         android:id="@+id/btn_add_income"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Add Income"
-        android:backgroundTint="#81C784"
         android:textColor="@android:color/white"
+        app:backgroundTint="#81C784"
         android:layout_marginTop="24dp"
-        android:elevation="2dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_budget_warning"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_budget_warning" />
 
     <Button
         android:id="@+id/btn_add_expense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Add Expense"
-        android:backgroundTint="#E57373"
         android:textColor="@android:color/white"
+        app:backgroundTint="#E57373"
         android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/btn_add_income"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_income" />
 
     <Button
         android:id="@+id/btn_view_chart"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="View Spending Chart"
-        android:backgroundTint="#4DD0E1"
         android:textColor="@android:color/white"
+        app:backgroundTint="#4DD0E1"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/btn_add_expense"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_expense" />
 
     <Button
         android:id="@+id/btn_transaction_history"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="View Transaction History"
-        android:backgroundTint="#9575CD"
         android:textColor="@android:color/white"
+        app:backgroundTint="#9575CD"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/btn_view_chart"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_view_chart" />
 
     <Button
         android:id="@+id/btn_set_budget"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Set Monthly Budget"
-        android:backgroundTint="#FFB74D"
         android:textColor="@android:color/white"
+        app:backgroundTint="#FFB74D"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/btn_transaction_history"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_transaction_history" />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:textColor="@android:color/white"
+        app:backgroundTint="#546E7A"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_set_budget" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

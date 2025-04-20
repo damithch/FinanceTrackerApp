@@ -26,4 +26,15 @@
     <!-- Titles -->
     <string name="transaction_history">Transaction History</string>
     <string name="budget_warning">⚠️ You have exceeded your budget!</string>
+
+    <!-- Auth Flow -->
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="no_account">No account yet? Register here</string>
+    <string name="logout">Logout</string>
+
 </resources>
