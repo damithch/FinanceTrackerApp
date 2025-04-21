@@ -4,36 +4,95 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     android:padding="24dp">
 
+    <!-- Header Section -->
     <TextView
         android:id="@+id/tv_budget_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Set Monthly Budget"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/et_budget_amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter amount in Rs."
-        android:inputType="numberDecimal"
+        android:text="Set Monthly Budget"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Budget Input Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_budget_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@id/tv_budget_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <EditText
+            android:id="@+id/et_budget_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter amount in Rs."
+            android:inputType="numberDecimal"
+            android:minHeight="56dp"
+            android:background="@null"
+            android:padding="16dp" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Budget Information Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_budget_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/card_budget_amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="💡 Budget Tips"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#333333"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Set a realistic budget you can stick to\n• Track your expenses regularly\n• Adjust your budget as needed\n• Aim to stay under 80% of your budget"
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Save Button -->
     <Button
         android:id="@+id/btn_save_budget"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Save Budget"
-        app:layout_constraintTop_toBottomOf="@id/et_budget_amount"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#FF9800"
+        android:layout_marginTop="32dp"
+        android:minHeight="56dp"
+        app:cornerRadius="12dp"
+        app:layout_constraintTop_toBottomOf="@id/card_budget_info"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

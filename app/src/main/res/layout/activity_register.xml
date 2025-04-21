@@ -3,7 +3,7 @@
     android:id="@+id/register_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@drawable/bg_login_gradient"
     android:fillViewport="true">
 
     <LinearLayout
@@ -11,26 +11,36 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:padding="24dp">
+        android:padding="32dp">
 
-        <!-- ── Screen title ─────────────────────────────── -->
+        <!-- App logo -->
+        <ImageView
+            android:id="@+id/iv_register_logo"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/ic_finance_logo"
+            android:contentDescription="@string/app_name"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Screen title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register"
             android:textSize="26sp"
             android:textStyle="bold"
-            android:textColor="@color/text_primary"/>
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="24dp" />
 
-        <!-- ── Name input ───────────────────────────────── -->
+        <!-- Name input -->
         <EditText
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/full_name"
-            android:layout_marginTop="24dp"/>
+            android:layout_marginTop="0dp" />
 
-        <!-- ── Email input ──────────────────────────────── -->
+        <!-- Email input -->
         <EditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
@@ -38,9 +48,9 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:importantForAutofill="yes"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginTop="12dp" />
 
-        <!-- ── Password input ───────────────────────────── -->
+        <!-- Password input -->
         <EditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
@@ -48,9 +58,9 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:importantForAutofill="yes"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginTop="12dp" />
 
-        <!-- ── Confirm password input ───────────────────── -->
+        <!-- Confirm password -->
         <EditText
             android:id="@+id/et_password_confirm"
             android:layout_width="match_parent"
@@ -58,17 +68,17 @@
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:importantForAutofill="yes"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginTop="12dp" />
 
-        <!-- ── Register button ──────────────────────────── -->
+        <!-- Register button -->
         <Button
             android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/register"
-            android:textColor="@color/button_text"
-            android:backgroundTint="@color/primary"
-            android:layout_marginTop="24dp"/>
+            android:textColor="@android:color/white"
+            android:backgroundTint="#0F4C75"
+            android:layout_marginTop="24dp" />
 
     </LinearLayout>
 </ScrollView>

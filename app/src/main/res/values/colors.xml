@@ -1,11 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#027368</color>           <!-- Deep teal -->
-    <color name="primary_dark">#026b5a</color>      <!-- Slightly darker teal -->
-    <color name="accent">#f4a742</color>            <!-- Warm orange accent -->
-    <color name="error">#D32F2F</color>             <!-- Standard red for errors -->
-    <color name="background">#FAFAFA</color>        <!-- Light neutral background -->
-    <color name="card_bg">#FFFFFF</color>           <!-- White cards -->
-    <color name="text_primary">#212121</color>      <!-- Dark text -->
-    <color name="text_secondary">#757575</color>    <!-- Subtext -->
-    <color name="button_text">#FFFFFF</color>       <!-- Button text white -->
+    <!-- App theme colors -->
+    <color name="colorPrimary">#027368</color>
+    <color name="colorPrimaryDark">#026B5A</color>
+    <color name="colorAccent">#F4A742</color>
+
+    <!-- Status & background -->
+    <color name="background">#FAFAFA</color>
+    <color name="card_bg">#FFFFFF</color>
+    <color name="error">#D32F2F</color>
+
+    <!-- Text -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="button_text">#FFFFFF</color>
+
+    <!-- Chips -->
+    <color name="chip_background_color">#F5F5F5</color>
+    <color name="chip_stroke_all">#27AE60</color>
+    <color name="chip_stroke_income">#8E44AD</color>
+    <color name="chip_stroke_expense">#2980B9</color>
 </resources>

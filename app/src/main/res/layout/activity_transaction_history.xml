@@ -3,108 +3,243 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="#FAF8FC">
+    android:background="@drawable/gradient_background"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="24dp">
 
-        <!-- Title -->
-        <TextView
-            android:id="@+id/tv_history_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Transaction History"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="#333"
-            android:gravity="center"
+        <!-- Toolbar (no back button now) -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_history"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#FFFFFF"
+            android:elevation="4dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Filter Income Button -->
-        <Button
-            android:id="@+id/btn_filter_income"
+            <TextView
+                android:id="@+id/tv_history_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transaction History"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_gravity="center" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <!-- Filter Group Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_filters"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Show Incomes"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="#8E44AD"
-            android:textColor="#FFF"
-            android:layout_marginBottom="8dp"
-            android:padding="10dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_history_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Filter Expense Button -->
-        <Button
-            android:id="@+id/btn_filter_expense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Show Expenses"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="#2980B9"
-            android:textColor="#FFF"
-            android:padding="10dp"
-            app:layout_constraintTop_toBottomOf="@id/btn_filter_income"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Show All Button -->
-        <Button
-            android:id="@+id/btn_filter_all"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Show All"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="#27AE60"
-            android:textColor="#FFF"
-            android:padding="10dp"
-            app:layout_constraintTop_toBottomOf="@id/btn_filter_expense"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- RecyclerView -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="0dp"
-            android:layout_height="400dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/btn_filter_all"
-            app:layout_constraintBottom_toTopOf="@id/btn_export_json"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_history"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Export to JSON -->
-        <Button
-            android:id="@+id/btn_export_json"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:background="@drawable/card_interior_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filter Transactions"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#424242"
+                    android:layout_marginBottom="8dp" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group_filters"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:chipSpacingHorizontal="8dp">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="All"
+                        app:chipBackgroundColor="@color/chip_background_color"
+                        app:chipStrokeColor="#27AE60"
+                        app:chipStrokeWidth="1dp"
+                        android:checkable="true"
+                        android:checked="true" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_income"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Income"
+                        app:chipBackgroundColor="@color/chip_background_color"
+                        app:chipStrokeColor="#8E44AD"
+                        app:chipStrokeWidth="1dp"
+                        android:checkable="true" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_expense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expense"
+                        app:chipBackgroundColor="@color/chip_background_color"
+                        app:chipStrokeColor="#2980B9"
+                        app:chipStrokeWidth="1dp"
+                        android:checkable="true" />
+                </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Legacy filter buttons (still hidden just in case) -->
+        <LinearLayout
+            android:id="@+id/layout_filter_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_history"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <!-- Income / Expense / All buttons kept but hidden -->
+        </LinearLayout>
+
+        <!-- Transaction List Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_transactions"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@id/card_filters"
+            app:layout_constraintBottom_toTopOf="@id/card_export_actions"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/card_interior_bg">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Transactions"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#424242" />
+
+                    <TextView
+                        android:id="@+id/tv_transaction_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 items"
+                        android:textSize="14sp"
+                        android:textColor="#78909C" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#F0F0F0" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    android:clipToPadding="false" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Export Actions -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_export_actions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Export to JSON"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="#6C5CE7"
-            android:textColor="#FFF"
-            app:layout_constraintTop_toBottomOf="@id/recyclerView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Export to TXT -->
-        <Button
-            android:id="@+id/btn_export_txt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Export to TXT"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="24dp"
-            android:backgroundTint="#E67E22"
-            android:textColor="#FFF"
-            app:layout_constraintTop_toBottomOf="@id/btn_export_json"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_interior_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Export Options"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#424242"
+                    android:layout_margin="16dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#F0F0F0" />
+
+                <Button
+                    android:id="@+id/btn_export_json"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Export to JSON"
+                    android:textAlignment="textStart"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="16dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableEnd="@null"
+                    android:textAllCaps="false"
+                    android:textColor="#6C5CE7"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#F0F0F0" />
+
+                <Button
+                    android:id="@+id/btn_export_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Export to TXT"
+                    android:textAlignment="textStart"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="16dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableEnd="@null"
+                    android:textAllCaps="false"
+                    android:textColor="#E67E22"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

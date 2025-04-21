@@ -3,10 +3,12 @@ package com.sliit.financetrackerapp
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.gson.Gson
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvIncome:  TextView
     private lateinit var tvExpense: TextView
     private lateinit var tvBudgetWarning: TextView
+    private lateinit var cardBudgetWarning: CardView
 
     // ── Action Buttons ───────────────────────────────────────
     private lateinit var btnAddIncome: Button
@@ -45,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         tvIncome        = findViewById(R.id.tv_income)
         tvExpense       = findViewById(R.id.tv_expense)
         tvBudgetWarning = findViewById(R.id.tv_budget_warning)
+        cardBudgetWarning = findViewById(R.id.card_budget_warning)
 
         btnAddIncome           = findViewById(R.id.btn_add_income)
         btnAddExpense          = findViewById(R.id.btn_add_expense)
@@ -102,13 +106,10 @@ class MainActivity : AppCompatActivity() {
         tvBalance.text = "Balance: Rs. %.2f".format(balance)
 
         if (budget > 0f && expense > budget) {
-            tvBudgetWarning.apply {
-                text = "⚠️ You have exceeded your budget of Rs. %.2f!".format(budget)
-                setTextColor(resources.getColor(android.R.color.holo_red_dark, null))
-                visibility = TextView.VISIBLE
-            }
+            tvBudgetWarning.text = "You have exceeded your budget of Rs. %.2f!".format(budget)
+            cardBudgetWarning.visibility = View.VISIBLE
         } else {
-            tvBudgetWarning.visibility = TextView.GONE
+            cardBudgetWarning.visibility = View.GONE
         }
     }
 
