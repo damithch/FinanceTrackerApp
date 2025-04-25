@@ -7,7 +7,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
-class BudgetActivity : AppCompatActivity() {
+class  BudgetActivity : AppCompatActivity() {
 
     private lateinit var etBudgetAmount: EditText
     private lateinit var btnSaveBudget: Button
